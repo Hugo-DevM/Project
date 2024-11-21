@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 
-const GymLocationScreen = () => {
+const ListUserScreen = () => {
     return (
         <View>
-            <Text>Map Screen</Text>
+            <Text>ListUserScreen</Text>
         </View>
     );
 };
 
-export default GymLocationScreen;
+export default ListUserScreen;

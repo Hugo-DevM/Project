@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getTrainers } from '../services/trainerServices'; // Importa el servicio para obtener los entrenadores
+import { getTrainers } from '../services/trainerServices'; 
 
 const TrainerListAdmin = () => {
   const [trainers, setTrainers] = useState([]);
@@ -32,7 +32,7 @@ const TrainerListAdmin = () => {
         <Text style={styles.name}>Nombre: {item.name}</Text>
         <Text style={styles.age}>Edad: {item.age}</Text>
         <Text style={styles.weight}>Peso: {item.weigth} Kg</Text>
-        <Text style={styles.weight}>Contact: +52 {item.contact}</Text>
+        <Text style={styles.weight}>Contact: +52 {item.phone}</Text>
       </View>
     </TouchableOpacity>
   );

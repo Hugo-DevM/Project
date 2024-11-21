@@ -22,3 +22,29 @@ export const fetchTrainerById = async (id) => {
       throw error;
     }
   };
+
+  export const getTrainerData = async (userId) => {
+    try {
+      const userDoc = firestore.collection('trainers').doc(userId);
+      const userSnapshot = await userDoc.get();
+      if (userSnapshot.exists) {
+        return userSnapshot.data();
+      } else {
+        console.log('No such document!');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      throw error;
+    }
+  };
+  
+  export const updateTrainerData = async (userId, userData) => {
+    try {
+      await firestore.collection('trainers').doc(userId).update(userData);
+      return { success: true, message: 'Perfil actualizado correctamente.' };
+    } catch (error) {
+      console.error('Error al actualizar los datos del usuario:', error);
+      return { success: false, message: 'Ocurrió un error al guardar los cambios.' };
+    }
+  };

@@ -1,32 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import getUserData from '../../../../services/userServices'
+import { useNavigation } from '@react-navigation/native';
 
-import {auth} from '../../../../firebase'
 
-const ProfileScreen = () => {
-    const [userData, setUserData] = useState(null);
-  
-    const handleFetchUserData = async () => {
-      try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          Alert.alert('Error', 'No user is currently logged in');
-          return;
-        }
-        const userId = currentUser.uid;
-        const data = await getUserData(userId);
-        if (data) {
-          setUserData(data);
-          Alert.alert('User Data', JSON.stringify(data, null, 2));
-        }
-      } catch (error) {
-        Alert.alert('Error', 'Failed to fetch user data');
-        
-        
-      }
-    };
 
+const ProfileTrainerScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image
@@ -34,21 +13,15 @@ const ProfileScreen = () => {
         style={styles.image}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleFetchUserData} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate('EditProfileTrainer')} style={styles.button}>
           <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
-      {userData && (
-        <View style={styles.userDataContainer}>
-          <Text style={styles.userDataText}>Name: {userData.name}</Text>
-          <Text style={styles.userDataText}>Email: {userData.email}</Text>
-        </View>
-      )}
     </View>
   );
 };
 
-export default ProfileScreen;
+export default ProfileTrainerScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { handleRegisterUser, handleRegisterTrainers, handleRegisterAdmins } from '../../src/services/authServices';
+import { handleRegisterAdmins, handleRegister } from '../../src/services/authServices';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -40,7 +40,7 @@ function UserAccount(props) {
                 />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => handleRegisterUser(email, password, name, true, props.navigation)}
+                        onPress={() => handleRegister(email, password, name, 'user', true, props.navigation)}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>Registrar</Text>
@@ -85,7 +85,7 @@ function TrainerAccount(props) {
                 />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => handleRegisterTrainers(email, password, name, props.navigation)}
+                        onPress={() => handleRegister(email, password, name, 'trainer', true, props.navigation)}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>Registrar</Text>

@@ -28,8 +28,8 @@ const EditEventScreen = ({ route, navigation }) => {
 
   const handleSave = async () => {
     try {
-      const { id, ...eventData } = event; // Excluir el campo 'id' del evento
-      await updateEvent(eventId, eventData); // Actualizar con los datos sin 'id'
+      const { id, ...eventData } = event;
+      await updateEvent(eventId, eventData);
       Alert.alert('Event Updated', 'Your event has been successfully updated!');
       navigation.navigate('HomeAdmin', { updated: true });
     } catch (error) {

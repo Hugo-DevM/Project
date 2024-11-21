@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     logoutButton: {
-        backgroundColor: '#ff5c5c', // Puedes cambiar el color si lo deseas
+        backgroundColor: '#ff5c5c',
         paddingVertical: 10,
         paddingHorizontal: 30,
-        borderRadius: 25, // Hace el botón ovalado
-        elevation: 3, // Añade una sombra para que se vea mejor (solo en Android)
+        borderRadius: 25,
+        elevation: 3,
     },
     logoutButtonText: {
         color: '#fff',

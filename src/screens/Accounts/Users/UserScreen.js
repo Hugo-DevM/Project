@@ -1,7 +1,6 @@
 // src/screens/UserScreen.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, ActivityIndicator, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import QRCode from 'react-native-qrcode-svg';
 import { fetchUserDetails } from '../../../services/qrServices'; 
 
@@ -44,7 +43,6 @@ const UserScreen = () => {
   );
 };
 
-// Estilos para el componente
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -136,9 +136,9 @@ const styles = StyleSheet.create({
     marginTop: '16%'
   },
   buttonArrow: {
-    position: 'absolute', // Para poder ubicar el botón en una posición específica
-    left: 10, // Ajusta el valor para ubicarlo según la distancia deseada desde la izquierda
-    zIndex: 1, // Asegura que el botón esté por encima de otros elementos, si es necesario
+    position: 'absolute',
+    left: 10, 
+    zIndex: 1,
     top: 10
   }
 });

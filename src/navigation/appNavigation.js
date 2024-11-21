@@ -9,21 +9,25 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LoginScreen from '../screens/Login/LoginScreen';
 import InformationScreen from '../screens/Login/InformationScreen';
 import GymLocationScreen from '../screens/Accounts/Users/Map/GymLocationScreen';
-import ProfileScreen from '../screens/Accounts/Users/Profile/ProfileScreen';
+import ProfileUserScreen from '../screens/Accounts/Users/Profile/ProfileUserScreen';
 import HomeScreen from '../screens/Accounts/Admins/HomeScreen';
 import GymEventsScreen from '../screens/Accounts/Users/Events/GymEvents';
 import ShowEventsScreen from '../screens/Accounts/Users/Events/ShowEvents';
 import UserScreen from '../screens/Accounts/Users/UserScreen';
 import CreateAccountsScreen from '../screens/Accounts/Admins/CreateAccounts/CreateAccounts';
 import TrainerScreen from '../screens/Accounts/Trainers/TrainerScreens/TrainerScreen';
+import ProfileTrainerScreen from '../screens/Accounts/Trainers/Profile/ProfileTrainerScreen';
+import EditProfileTrainerScreen from '../screens/Accounts/Trainers/Profile/EditProfileTrainerScreen';
 import AddEventsScreen from '../screens/Accounts/Admins/Events/addEvents';
 import EditEventScreen from '../screens/Accounts/Admins/Events/editEvents';
 import SettingsScreen from '../screens/Accounts/Users/Settings/SettingsScreen'
 import ListTrainersScreen from '../screens/Accounts/Users/Trainers/ListTrainersScreen'
 import EditProfileScreen from '../screens/Accounts/Users/Profile/EditProfileScreen'
 import ShowTrainerScreen from '../screens/Accounts/Users/Trainers/ShowTrainerScreen'
+import MyTrainerScreen from '../screens/Accounts/Users/Trainers/MyTrainerScreen'
 import ShowTrainerAdminScreen from '../screens/Accounts/Admins/Trainer/ShowTrainerAdminScreen'
 import ListTrainersAdminScreen from '../screens/Accounts/Admins/Trainer/ListTrainersAdminScreen'
+import ListUserScreen from '../screens/Accounts/Trainers/Users/ListUsersScreen'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -117,7 +121,7 @@ function DrawerNavigator() {
       />
       <Drawer.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileUserScreen}
         options={{
           drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
           drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
@@ -140,6 +144,71 @@ function DrawerNavigator() {
           drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
           drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
           drawerIcon: ({ color, size }) => (<Icon name='barbell-outline' size={size} color='#eab308' />)
+        }}
+      />
+      <Drawer.Screen
+        name="My Trainer"
+        component={MyTrainerScreen}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='body-outline' size={size} color='#eab308' />)
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
+//Drawer Trainer
+function DrawerTrainerNav() {
+  return (
+    <Drawer.Navigator initialRouteName="Punto Fitness Trainer" screenOptions={({ navigation }) => ({
+      headerStyle: { backgroundColor: '#1D2951' },
+      headerTintColor: '#eab308',
+      headerTitleStyle: { color: '#ffffff', fontSize: 22 },
+      headerLeft: () => (
+        <Icon
+          name="menu"
+          size={36}
+          color="#eab308"
+          style={{ marginLeft: 10 }}
+          onPress={() => navigation.toggleDrawer()}
+        />
+      ),
+    })}>
+      <Drawer.Screen
+        name="Punto Fitness Trainer"
+        component={TrainerScreen}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='home-outline' size={size} color='#eab308' />)
+        }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileTrainerScreen}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='person-outline' size={size} color='#eab308' />)
+        }}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='settings-outline' size={size} color='#eab308' />)
+        }}
+      />
+      <Drawer.Screen
+        name="Users"
+        component={ListUserScreen}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='body-outline' size={size} color='#eab308' />)
         }}
       />
     </Drawer.Navigator>
@@ -174,7 +243,7 @@ function DrawerAdmin() {
       />
       <Drawer.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileUserScreen}
         options={{
           drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
           drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
@@ -203,7 +272,6 @@ function DrawerAdmin() {
   );
 }
 
-// Stack Navigator
 export default function AppNavigation() {
   return (
     <NavigationContainer>
@@ -229,15 +297,16 @@ export default function AppNavigation() {
           component={DrawerAdmin}
         />
         <Stack.Screen
+          name="TrainerScreen"
+          options={{ headerShown: false }}
+          component={DrawerTrainerNav}
+        />
+        <Stack.Screen
           name="CreateAccounts"
           options={{ headerShown: false }}
           component={CreateAccountsScreen}
         />
-        <Stack.Screen
-          name="TrainerScreen"
-          options={{ headerShown: false }}
-          component={TrainerScreen}
-        />
+        
         <Stack.Screen
           name="AddEvents"
           options={{ headerShown: false }}
@@ -259,6 +328,11 @@ export default function AppNavigation() {
           component={EditProfileScreen}
         />
         <Stack.Screen
+          name="EditProfileTrainer"
+          options={{ headerShown: false }}
+          component={EditProfileTrainerScreen}
+        />
+        <Stack.Screen
           name="ShowTrainers"
           options={{ headerShown: false }}
           component={ShowTrainerScreen}
@@ -273,6 +347,7 @@ export default function AppNavigation() {
           options={{ headerShown: false }}
           component={ListTrainersAdminScreen}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

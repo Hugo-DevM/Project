@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { fetchTrainerById } from '../../../../services/trainerServices';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { handleHireTrainer } from '../../../../services/userServices'; 
 
 const ShowTrainerScreen = ({ route, navigation }) => {
     const { trainerId } = route.params;
@@ -72,6 +73,7 @@ const ShowTrainerScreen = ({ route, navigation }) => {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={styles.button}
+                            onPress={() => handleHireTrainer(trainer)} // Llama a la función al presionar el botón
                         >
                             <Text style={styles.buttonText}>Hire</Text>
                         </TouchableOpacity>
@@ -139,19 +141,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10,
-      },
-      button: {
+    },
+    button: {
         backgroundColor: '#FEC104',
         width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-      },
-      buttonText: {
+    },
+    buttonText: {
         color: '#FFFFFF',
         fontWeight: '700',
         fontSize: 18,
-      },
+    },
 });
 
 export default ShowTrainerScreen;

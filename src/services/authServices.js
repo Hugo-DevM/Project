@@ -1,6 +1,5 @@
 import { auth, firestore } from '../firebase';
 import { CommonActions } from '@react-navigation/native';
-import { View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import React from 'react';
 
@@ -61,7 +60,7 @@ export const handleLogin = (email, password, navigation) => {
     .catch(error => alert(`Error de inicio de sesión: ${error.message}`));
 };
 //Registro de Usuarios
-export const handleRegisterUser = (email, password, name, subscriptionActive, navigation) => {
+export const handleRegister = (email, password, name, role, subscriptionActive = false, navigation) => {
   auth
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -69,20 +68,21 @@ export const handleRegisterUser = (email, password, name, subscriptionActive, na
 
       const qrContent = {
         userId: user.uid,
-        role: 'user',
-        subscriptionActive: subscriptionActive,
+        role: role,
+        ...(role === 'user' && { subscriptionActive: subscriptionActive })
       };
 
-      firestore.collection('users').doc(user.uid).set({
+      const collection = role === 'user' ? 'users' : role === 'trainer' ? 'trainers' : 'admins';
+      firestore.collection(collection).doc(user.uid).set({
         name: name,
         email: email,
         password: password,
-        role: 'user',
-        subscriptionActive: subscriptionActive,
+        role: role,
+        ...(role === 'user' && { subscriptionActive: subscriptionActive }),
         qrCodeContent: qrContent,
       })
         .then(() => {
-          console.log('Usuario almacenado exitosamente en Firestore.');
+          console.log(`${role} almacenado exitosamente en Firestore.`);
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -91,49 +91,16 @@ export const handleRegisterUser = (email, password, name, subscriptionActive, na
           );
         })
         .catch((error) => {
-          console.error('Error guardando la información del usuario en Firestore:', error);
-          alert('Error al registrar el usuario en Firestore. Por favor, intenta de nuevo.');
+          console.error(`Error guardando la información del ${role} en Firestore:`, error);
+          alert(`Error al registrar el ${role} en Firestore. Por favor, intenta de nuevo.`);
         });
     })
     .catch((error) => {
-      console.error('Error al crear usuario con Firebase Authentication:', error);
+      console.error(`Error al crear ${role} con Firebase Authentication:`, error);
       alert(`Error de registro: ${error.message}`);
     });
 };
 
-// Generador de código QR
-const QRGenerator = ({ qrContent, qrRef }) => {
-  return (
-    <QRCode
-      value={JSON.stringify(qrContent)}
-      size={200}
-      getRef={(c) => (qrRef.current = c)} // Referencia para exportar el QR como dataURL
-    />
-  );
-};
-//Registro de entrenadores
-export const handleRegisterTrainers = (email, password, name, navigation) => {
-  auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      firestore.collection('trainers').doc(user.uid).set({
-        name: name,
-        email: email,
-        password: password,
-        role: 'trainer'
-      })
-        .catch(error => console.error('Error saving user information:', error));
-
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'HomeAdmin' }],
-        })
-      );
-    })
-    .catch(error => alert(error.message));
-};
 //Registro de Admins
 export const handleRegisterAdmins = (email, password, name, navigation) => {
   auth

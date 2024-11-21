@@ -20,7 +20,6 @@ const AddEventsScreen = (props) => {
         }
 
         try {
-            // Convert date and time to strings to save in Firestore
             const formattedDate = date.toISOString().split('T')[0];
             const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
