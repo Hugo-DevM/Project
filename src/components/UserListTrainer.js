@@ -1,52 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { getTrainers } from '../services/trainerServices'; 
+import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { fetchUsersByTrainer } from '../services/trainerServices';
 
-const TrainerListAdmin = () => {
-  const [trainers, setTrainers] = useState([]);
+const UserListTrainer = ({ trainerId }) => {
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = getTrainers((updatedTrainers) => {
-      setTrainers(updatedTrainers);
+    const unsubscribe = fetchUsersByTrainer(trainerId, (usersData) => {
+      setUsers(usersData);
       setLoading(false);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [trainerId]);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity 
-      onPress={() => navigation.navigate('ShowTrainers', { trainerId: item.id })} 
-      style={styles.itemContainer}
-    >
-      <View style={styles.trainerDetails}>
+    <View style={styles.itemContainer}>
+      <View style={styles.userDetails}>
         <Text style={styles.name}>Nombre: {item.name}</Text>
-        <Text style={styles.age}>Edad: {item.age}</Text>
-        <Text style={styles.weight}>Peso: {item.weight} Kg</Text>
-        <Text style={styles.weight}>Contacto: +52 {item.phone}</Text>
+        <Text style={styles.age}>Edad: {item.age ? item.age : 'No disponible'}</Text>
+        <Text style={styles.weight}>Peso: {item.weight ? item.weight + ' kg' : 'No disponible'}</Text>
+        <Text style={styles.phone}>Teléfono: {item.phone ? item.phone : 'No disponible'}</Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />;
   }
 
-  if (trainers.length === 0) {
+  if (users.length === 0) {
     return (
-      <View style={styles.noTrainersContainer}>
-        <Text style={styles.noTrainersText}>No hay entrenadores disponibles</Text>
+      <View style={styles.noUsersContainer}>
+        <Text style={styles.noUsersText}>No hay usuarios registrados para este entrenador</Text>
       </View>
     );
   }
 
   return (
     <FlatList
-      data={trainers}
-      keyExtractor={(item) => item.id}
+      data={users}
+      keyExtractor={(item) => item.userId}
       renderItem={renderItem}
       contentContainerStyle={styles.listContainer}
     />
@@ -60,7 +55,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: 16,
     marginBottom: 12,
     backgroundColor: '#f9f9f9',
@@ -71,37 +66,42 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  trainerDetails: {
+  userDetails: {
     flex: 1,
   },
   name: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 4,
   },
   age: {
     fontSize: 14,
-    color: '#888',
+    color: '#555',
     marginBottom: 4,
   },
   weight: {
     fontSize: 14,
-    color: '#888',
+    color: '#555',
     marginBottom: 4,
+  },
+  phone: {
+    fontSize: 14,
+    color: '#555',
   },
   loadingIndicator: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  noTrainersContainer: {
+  noUsersContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  noTrainersText: {
+  noUsersText: {
     fontSize: 16,
     color: '#888',
   },
 });
 
-export default TrainerListAdmin;
+export default UserListTrainer;

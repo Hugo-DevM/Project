@@ -9,18 +9,12 @@ const EventListUser = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const getEvents = async () => {
-      try {
-        const eventsData = await fetchEvents();
-        setEvents(eventsData);
-      } catch (error) {
-        console.error('Error loading events:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const unsubscribe = fetchEvents((eventsData) => {
+      setEvents(eventsData);
+      setLoading(false);
+    });
 
-    getEvents();
+    return () => unsubscribe();
   }, []);
 
   const renderItem = ({ item }) => (

@@ -242,15 +242,6 @@ function DrawerAdmin() {
         }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfileUserScreen}
-        options={{
-          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
-          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
-          drawerIcon: ({ color, size }) => (<Icon name='person-outline' size={size} color='#eab308' />)
-        }}
-      />
-      <Drawer.Screen
         name="Settings"
         component={SettingsScreen}
         options={{

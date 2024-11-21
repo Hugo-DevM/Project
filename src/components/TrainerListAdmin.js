@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getTrainers } from '../services/trainerServices'; // Importa el servicio para obtener los entrenadores
+import { firestore } from '../firebase';
 
 const TrainerListAdmin = () => {
   const [trainers, setTrainers] = useState([]);
@@ -9,18 +9,22 @@ const TrainerListAdmin = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const fetchTrainers = async () => {
-      try {
-        const trainersData = await getTrainers();
+    const unsubscribe = firestore.collection('trainers').onSnapshot(
+      (snapshot) => {
+        const trainersData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setTrainers(trainersData);
-      } catch (error) {
-        console.error('Error loading trainers:', error);
-      } finally {
+        setLoading(false);
+      },
+      (error) => {
+        console.error('Error fetching trainers:', error);
         setLoading(false);
       }
-    };
+    );
 
-    fetchTrainers();
+    return () => unsubscribe();
   }, []);
 
   const renderItem = ({ item }) => (
@@ -31,8 +35,8 @@ const TrainerListAdmin = () => {
       <View style={styles.trainerDetails}>
         <Text style={styles.name}>Nombre: {item.name}</Text>
         <Text style={styles.age}>Edad: {item.age}</Text>
-        <Text style={styles.weight}>Peso: {item.weigth} Kg</Text>
-        <Text style={styles.weight}>Contact: +52 {item.contact}</Text>
+        <Text style={styles.weight}>Peso: {item.weight} Kg</Text>
+        <Text style={styles.weight}>Contacto: +52 {item.contact}</Text>
       </View>
     </TouchableOpacity>
   );

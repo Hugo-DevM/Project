@@ -19,14 +19,16 @@ export const createEvent = async (title, description, date, time) => {
 };
 
 //Traer los datos del evento
-export const fetchEvents = async () => {
-    try {
-        const snapshot = await firestore.collection('events').get();
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        throw error; 
-    }
+export const fetchEvents = (callback) => {
+  try {
+      return firestore.collection('events').onSnapshot((snapshot) => {
+          const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          callback(events);
+      });
+  } catch (error) {
+      console.error('Error fetching events in real-time:', error);
+      throw error;
+  }
 };
 
 //Traer los datos por el id del item

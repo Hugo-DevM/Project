@@ -1,31 +1,32 @@
-// EventList.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { fetchEvents } from '../services/eventsServices'; 
-import { useNavigation } from '@react-navigation/native';
 import { firestore } from '../firebase';
+import { useNavigation } from '@react-navigation/native';
 
-const EventList = () => {
+const EventListAdmin = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
+  // Función para obtener eventos en tiempo real
   useEffect(() => {
-    const getEvents = async () => {
-      try {
-        const eventsData = await fetchEvents();
+    const unsubscribe = firestore.collection('events').onSnapshot(
+      (snapshot) => {
+        const eventsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setEvents(eventsData);
-      } catch (error) {
-        console.error('Error loading events:', error);
-      } finally {
+        setLoading(false);
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
         setLoading(false);
       }
-    };
+    );
 
-    getEvents();
+    return () => unsubscribe();
   }, []);
 
+  // Función para eliminar un evento
   const deleteEvent = async (id) => {
     try {
       await firestore.collection('events').doc(id).delete();
@@ -35,32 +36,29 @@ const EventList = () => {
     }
   };
 
+  // Renderizar cada evento
   const renderItem = ({ item }) => (
-    <TouchableOpacity 
-      onPress={() => navigation.navigate('EditEvents', { eventId: item.id })} 
-      style={styles.itemContainer}
-    >
-      <View style={styles.eventDetails}>
+    <View style={styles.itemContainer}>
+      <TouchableOpacity 
+        onPress={() => navigation.navigate('EditEvents', { eventId: item.id })} 
+        style={styles.eventDetails}
+      >
         <Text style={styles.title}>{item.title}</Text>
-        {item.date ? (
-          <Text style={styles.date}>{item.date}</Text>
-        ) : (
-          <Text style={styles.date}>Fecha no disponible</Text>
-        )}
-        {item.time && (
-          <Text style={styles.time}>{item.time}</Text>
-        )}
-      </View>
+        <Text style={styles.date}>{item.date || 'Fecha no disponible'}</Text>
+        {item.time && <Text style={styles.time}>{item.time}</Text>}
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => deleteEvent(item.id)} style={styles.deleteButton}>
         <Icon name="trash" size={24} color="red" />
       </TouchableOpacity>
-    </TouchableOpacity>
+    </View>
   );
 
+  // Indicador de carga
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />;
   }
 
+  // Mensaje si no hay eventos
   if (events.length === 0) {
     return (
       <View style={styles.noEventsContainer}>
@@ -133,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventList;
+export default EventListAdmin;
