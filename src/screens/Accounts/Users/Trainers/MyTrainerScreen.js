@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import { fetchHiredTrainer } from '../../../../services/userServices'; // Asegúrate de importar la función correctamente
+import { View, Text, ActivityIndicator, StyleSheet, Button, Alert } from 'react-native';
+import { firestore, auth } from '../../../../firebase'; 
+import { removeTrainer } from '../../../../services/userServices';
 
 const MyTrainerScreen = () => {
   const [trainer, setTrainer] = useState(null);
@@ -8,20 +9,63 @@ const MyTrainerScreen = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Llamar a la función para obtener los datos del entrenador
-    const getTrainerData = async () => {
-      try {
-        const trainerData = await fetchHiredTrainer();
-        setTrainer(trainerData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const userId = auth.currentUser?.uid;
+    if (!userId) {
+      setError('User not logged in');
+      setLoading(false);
+      return;
+    }
 
-    getTrainerData();
+    // Configura un listener para escuchar cambios en tiempo real
+    const unsubscribe = firestore
+      .collection('users')
+      .doc(userId)
+      .onSnapshot(
+        (doc) => {
+          if (doc.exists) {
+            const userData = doc.data();
+            setTrainer(userData.myTrainer || null);
+          } else {
+            setTrainer(null);
+            setError('User document not found');
+          }
+          setLoading(false);
+        },
+        (err) => {
+          console.error('Error fetching trainer:', err);
+          setError('Failed to fetch trainer data');
+          setLoading(false);
+        }
+      );
+
+    // Limpia el listener al desmontar el componente
+    return () => unsubscribe();
   }, []);
+
+  const handleRemoveTrainer = async () => {
+    Alert.alert(
+      'Remove Trainer',
+      'Are you sure you want to remove your trainer?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            try {
+              setLoading(true);
+              await removeTrainer(); // Llama a la función para eliminar el entrenador
+              Alert.alert('Success', 'Trainer removed successfully');
+            } catch (err) {
+              console.error(err);
+              Alert.alert('Error', 'Failed to remove trainer');
+            } finally {
+              setLoading(false);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   if (loading) {
     return (
@@ -47,13 +91,12 @@ const MyTrainerScreen = () => {
     );
   }
 
-  // Convertir la fecha de contratación a un formato legible
-  let formattedHireDate = "Unknown";
+  let formattedHireDate = 'Unknown';
   if (trainer.hireDate) {
     try {
       const hireDate = new Date(trainer.hireDate);
       if (!isNaN(hireDate)) {
-        formattedHireDate = hireDate.toLocaleDateString(); // Puedes ajustar el formato según tus necesidades
+        formattedHireDate = hireDate.toLocaleDateString();
       }
     } catch (error) {
       console.error('Error formatting hire date:', error);
@@ -69,6 +112,7 @@ const MyTrainerScreen = () => {
       <Text>Contact: {trainer.contact}</Text>
       <Text>Cost: {trainer.cost}</Text>
       <Text>Hire Date: {formattedHireDate}</Text>
+      <Button title="Remove Trainer" onPress={handleRemoveTrainer} color="red" />
     </View>
   );
 };

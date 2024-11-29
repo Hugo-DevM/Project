@@ -13,17 +13,28 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion":"1.0.0",
+      "bundleIdentifier": "com.lechugaa.GymMate"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lechugaa.GymMate"
+      "package": "com.lechugaa.GymMate",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d4eb3b99-c609-45dd-b9eb-2fc712c1f956"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d4eb3b99-c609-45dd-b9eb-2fc712c1f956"
     }
   }
 }

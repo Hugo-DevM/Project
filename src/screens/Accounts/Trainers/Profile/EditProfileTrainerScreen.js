@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, SafeAreaView, ScrollView, Alert, Image } from 'react-native';
 import { auth } from '../../../../firebase';
 import { getTrainerData, updateTrainerData } from '../../../../services/trainerServices';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -65,6 +65,10 @@ const EditProfileTrainerScreen = ({ navigation }) => {
                 <Text style={styles.headerTitle}>Edit Profile</Text>
             </View>
             <ScrollView contentContainerStyle={styles.form}>
+            <View style={styles.imageContainer}>
+      <Image source={require('../../../../../assets/images/logoTrainer.png')} style={styles.image}/>
+
+      </View>
                 <Text style={styles.label}>Name:</Text>
                 <TextInput
                     style={styles.input}
@@ -192,4 +196,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
+    image:{
+        width: 300,
+        height: 300,
+        marginBottom: '10%'
+      },
+      imageContainer:{
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
 });

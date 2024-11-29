@@ -28,6 +28,8 @@ import MyTrainerScreen from '../screens/Accounts/Users/Trainers/MyTrainerScreen'
 import ShowTrainerAdminScreen from '../screens/Accounts/Admins/Trainer/ShowTrainerAdminScreen'
 import ListTrainersAdminScreen from '../screens/Accounts/Admins/Trainer/ListTrainersAdminScreen'
 import ListUserScreen from '../screens/Accounts/Trainers/Users/ListUsersScreen'
+import UserListAdmin from '../screens/Accounts/Admins/ShowUsers'
+import AdminList from '../screens/Accounts/Admins/ShowAdmins'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -259,6 +261,25 @@ function DrawerAdmin() {
           drawerIcon: ({ color, size }) => (<Icon name='barbell-outline' size={size} color='#eab308' />)
         }}
       />
+      <Drawer.Screen
+        name="Users"
+        component={UserListAdmin}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='account-circle' size={size} color='#eab308' />)
+        }}
+      />
+      <Drawer.Screen
+        name="Admins"
+        component={AdminList}
+        options={{
+          drawerLabelStyle: { color: '#ffffff', fontSize: 16 },
+          drawerItemStyle: { backgroundColor: '#1D2951', marginVertical: 10 },
+          drawerIcon: ({ color, size }) => (<Icon name='shield-account' size={size} color='#eab308' />)
+        }}
+      />
+      
     </Drawer.Navigator>
   );
 }

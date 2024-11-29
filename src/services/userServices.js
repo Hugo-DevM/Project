@@ -1,4 +1,4 @@
-import { auth, firestore } from '../firebase'; 
+import { auth, firestore, firebase } from '../firebase'; 
 
 export const getUserData = async (userId) => {
   try {
@@ -72,6 +72,8 @@ export const hireTrainer = async (userId, trainer) => {
 
     const userDataForTrainer = {
       userId: userId,
+      age: userData.age || 'Unknown',
+      weight: userData.weight || 'Unknown',
       name: userData.name || 'Unknown',
       email: userData.email || 'Unknown',
       phone: userData.phone || 'Unknown',
@@ -132,8 +134,6 @@ export const fetchHiredTrainer = async () => {
     if (!currentUser) {
       throw new Error('No user is currently logged in');
     }
-
-    // Referencia al usuario en la colección 'users'
     const userRef = firestore.collection('users').doc(currentUser.uid);
     const userSnapshot = await userRef.get();
 
@@ -143,15 +143,12 @@ export const fetchHiredTrainer = async () => {
 
     const userData = userSnapshot.data();
 
-    // Verificar si el usuario tiene un entrenador asignado
     if (!userData.myTrainer || !userData.myTrainer.trainerId) {
       throw new Error('No trainer assigned to this user');
     }
 
-    // Obtener la ID del entrenador asignado
     const trainerId = userData.myTrainer.trainerId;
 
-    // Referencia al entrenador en la colección 'trainers'
     const trainerRef = firestore.collection('trainers').doc(trainerId);
     const trainerSnapshot = await trainerRef.get();
 
@@ -159,11 +156,63 @@ export const fetchHiredTrainer = async () => {
       throw new Error('Trainer not found');
     }
 
-    // Devolver los datos del entrenador
     return trainerSnapshot.data();
   } catch (error) {
     console.error('Error fetching hired trainer:', error);
-    throw error; // Puedes manejar este error según tus necesidades
+    throw error;
+  }
+};
+
+export const removeTrainer = async () => {
+  const userId = auth.currentUser?.uid;
+  if (!userId) {
+    throw new Error('User ID is required');
+  }
+
+  console.log('Starting trainer removal for user ID:', userId);
+
+  try {
+    const userRef = firestore.collection('users').doc(userId);
+    const userSnapshot = await userRef.get();
+
+    if (!userSnapshot.exists) {
+      console.error('User document not found:', userId);
+      throw new Error('User not found in Firestore');
+    }
+
+    const userData = userSnapshot.data();
+    const trainerId = userData.myTrainer?.trainerId;
+
+    if (!trainerId) {
+      console.error('No trainer assigned for user:', userId);
+      throw new Error('No trainer assigned to this user');
+    }
+
+    await userRef.update({
+      myTrainer: firebase.firestore.FieldValue.delete(), 
+    });
+
+    console.log('Trainer removed from user:', userId);
+
+    const trainerRef = firestore.collection('trainers').doc(trainerId);
+    const trainerSnapshot = await trainerRef.get();
+
+    if (trainerSnapshot.exists) {
+      const trainerData = trainerSnapshot.data();
+      const updatedUsers = { ...trainerData.myUsers };
+      delete updatedUsers[userId];
+
+      await trainerRef.update({
+        myUsers: updatedUsers,
+      });
+    }
+
+    console.log('User data removed from trainer:', trainerId);
+
+    return true;
+  } catch (error) {
+    console.error('Error removing trainer:', error);
+    throw error;
   }
 };
 
