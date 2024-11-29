@@ -29,7 +29,7 @@ export const hireTrainer = async (userId, trainer) => {
   try {
     if (!userId || !trainer || !trainer.id) {
       console.error('Invalid userId or trainer data');
-      return false; 
+      return false;
     }
 
     const userRef = firestore.collection('users').doc(userId);
@@ -37,17 +37,22 @@ export const hireTrainer = async (userId, trainer) => {
     const userSnapshot = await userRef.get();
     if (!userSnapshot.exists) {
       console.error('User not found');
-      return false; 
+      return false;
     }
     const userData = userSnapshot.data();
+
+    if (!userData.weight || !userData.phone || !userData.age) {
+      alert('You need to complete your profile (weight, age and phone) before hiring a trainer.');
+      return false;
+    }
 
     if (userData.myTrainer && userData.myTrainer.trainerId) {
       if (userData.myTrainer.trainerId === trainer.id) {
         alert('Trainer is already assigned to this user');
-        return false; 
+        return false;
       } else {
         alert('User already has a different trainer assigned');
-        return false; 
+        return false;
       }
     }
 
@@ -86,7 +91,7 @@ export const hireTrainer = async (userId, trainer) => {
     if (trainerSnapshot.exists) {
       const trainerData = trainerSnapshot.data();
       if (trainerData.myUsers && trainerData.myUsers[userId]) {
-        return false; 
+        return false;
       }
     }
 
@@ -101,12 +106,13 @@ export const hireTrainer = async (userId, trainer) => {
       { merge: true }
     );
 
-    return true; 
+    return true;
   } catch (error) {
     console.error('Error hiring trainer:', error);
-    return false; 
+    return false;
   }
 };
+
 
 export const handleHireTrainer = async (trainer) => {
   try {
