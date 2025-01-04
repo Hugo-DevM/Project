@@ -3,7 +3,7 @@
 Una aplicación móvil desarrollada en **React Native** para gestionar las operaciones internas de un gimnasio, ofreciendo funcionalidades específicas para administradores, entrenadores y usuarios. La aplicación utiliza **Firebase** para autenticación y **Cloud Firestore** como base de datos principal.
 
 ## Características Principales  
-###Login
+### Login
 - Autentificacion de usuarios por roles de usuarios
 ![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/login.PNG)
 
