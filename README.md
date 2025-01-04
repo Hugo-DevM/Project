@@ -51,15 +51,15 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
    git clone https://github.com/Hugo-DevM/Project
    cd nombre-del-repo
    
-2. Instala las dependencias: 
-   npm install
+2. Instala las dependencias:
+- npm install
 
 3. Configura las credenciales de Firebase en el archivo **firebase.js**
 
 4. Inicia la aplicación:
-npm start
+- npm start
 
-5. Usa Expo Go en tu dispositivo móvil para escanear el código QR y probar la aplicación
+6. Usa Expo Go en tu dispositivo móvil para escanear el código QR y probar la aplicación
 
 ###Próximas Mejoras
 - Implementación de notificaciones push para recordatorios de eventos.
