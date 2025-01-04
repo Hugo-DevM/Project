@@ -66,11 +66,11 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
 
 6. Usa Expo Go en tu dispositivo móvil para escanear el código QR y probar la aplicación
 
-###Próximas Mejoras
+### Próximas Mejoras
 - Implementación de notificaciones push para recordatorios de eventos.
 - Mejoras en el diseño UI/UX para mayor accesibilidad.
 
-###Contribuciones
+### Contribuciones
 Las contribuciones son bienvenidas. Si deseas colaborar, por favor abre un issue o envía un pull request.
 
 
