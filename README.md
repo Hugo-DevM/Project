@@ -11,8 +11,7 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
 - Crear y gestionar cuentas de **entrenadores** y **usuarios**.  
 - Visualización cuentas de **entrenadores** y **usuarios**.  
 - Crear y administrar **eventos** relacionados con las actividades del gimnasio.
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createUsersAdmin.PNG)
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createEventAdmin.PNG)
+![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createUsersAdmin.PNG) ![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createEventAdmin.PNG)
 
 ### **Entrenador**  
 - Acceso al gimnasio mediante un **código QR** único.  
