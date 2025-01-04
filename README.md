@@ -48,7 +48,7 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
 ## Instalación y Uso  
 
 1. Clona el repositorio:  
-   git clone https://github.com/tuusuario/nombre-del-repo.git
+   git clone https://github.com/Hugo-DevM/Project
    cd nombre-del-repo
    
 2. Instala las dependencias: 
