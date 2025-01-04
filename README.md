@@ -5,21 +5,25 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
 ## Características Principales  
 ### Login
 - Autentificacion de usuarios por roles de usuarios
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/login.PNG)
+
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/login.PNG" alt="Login" width="300"/>
 
 ### **Administrador**  
 - Crear y gestionar cuentas de **entrenadores** y **usuarios**.  
 - Visualización cuentas de **entrenadores** y **usuarios**.  
 - Crear y administrar **eventos** relacionados con las actividades del gimnasio.
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createUsersAdmin.PNG) ![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createEventAdmin.PNG)
+
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createUsersAdmin.PNG" alt="Crear usuarios" width="300"/>  
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/createEventAdmin.PNG" alt="Crear eventos" width="300"/>
 
 ### **Entrenador**  
 - Acceso al gimnasio mediante un **código QR** único.  
 - Visualización de una lista de usuarios asignados para entrenamiento personalizado.  
 - Edición de su perfil personal.
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/homeTrainer.PNG)
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/userListTrainer.PNG)
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/editProfileTrainer.PNG)
+
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/homeTrainer.PNG" alt="Home entrenador" width="300"/>  
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/userListTrainer.PNG" alt="Lista usuarios" width="300"/>  
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/editProfileTrainer.PNG" alt="Editar perfil" width="300"/>
 
 ### **Usuario**  
 - Acceso al gimnasio mediante un **código QR** único.  
@@ -27,9 +31,10 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
 - Contratación de entrenadores directamente desde la aplicación.  
 - Visualización de los datos del **entrenador** personal.
 - Visualización del mapa para la ubicacion.
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/homeUser.PNG)
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/editProfileUser.PNG)
-![image alt](https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/map.PNG)
+
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/homeUser.PNG" alt="Home usuario" width="300"/>  
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/editProfileUser.PNG" alt="Editar perfil usuario" width="300"/>  
+<img src="https://github.com/Hugo-DevM/Project/blob/c32c6b86b8c1acf3107ffab1df95c3e539a15e8d/map.PNG" alt="Mapa" width="300"/>
 
 ## Tecnologías Utilizadas  
 
@@ -48,8 +53,8 @@ Una aplicación móvil desarrollada en **React Native** para gestionar las opera
 ## Instalación y Uso  
 
 1. Clona el repositorio:  
-   git clone https://github.com/Hugo-DevM/Project
-   cd nombre-del-repo
+- git clone https://github.com/Hugo-DevM/Project
+- cd nombre-del-repo
    
 2. Instala las dependencias:
 - npm install
